@@ -1,4 +1,7 @@
 #!/bin/bash
+
+USER=$""
+
 sudo apt update && sudo apt upgrade -y
 sudo apt-get install wget -y
 sudo apt install jq curl openjdk-21-jdk -y
@@ -62,6 +65,31 @@ echo "
 #first launch will terminate as eula isnt set to true
 java -jar paperclip.jar
 #/etc/syste
+
+if [ ! $USER = ""]; then
+  UUID=$(curl -X GET "https://api.mojang.com/users/profiles/minecraft/${USER}" -H  "accept: application/json" | jq '.id')
+  UUID=$"${UUID:0:8}-${UUID:8:4}-${UUID:12:4}-${UUID:16:4}-${UUID:20:12}"
+
+  echo'
+  [
+    {
+      "uuid":"${UUID}",
+      "name":"${USER}",
+      "level": 4,
+      "bypassPlayerLimit": false
+    }
+  ]' > ops.json
+fi
+
+
+
+if test -f ../server.properties; then
+  cat ../server.properties > server.properties
+fi
+
+
+
+
 
 #upate eula
 chmod +x start.sh
