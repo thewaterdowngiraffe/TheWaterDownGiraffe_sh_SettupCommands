@@ -66,19 +66,22 @@ echo "
 java -jar minecraftServer.jar
 #/etc/syste
 
-if [ ! $USER = ""]; then
-  UUID=$(curl -X GET "https://api.mojang.com/users/profiles/minecraft/${USER}" -H  "accept: application/json" | jq '.id')
+
+if [ ! $USER = "" ]; then
+  UUID=$(curl -X GET "https://api.mojang.com/users/profiles/minecraft/${USER}" | jq '.id')
+  UUID="${UUID%\"}"
+  UUID="${UUID#\"}"
   UUID=$"${UUID:0:8}-${UUID:8:4}-${UUID:12:4}-${UUID:16:4}-${UUID:20:12}"
 
-  echo'
+  echo "
   [
     {
-      "uuid":"${UUID}",
-      "name":"${USER}",
-      "level": 4,
-      "bypassPlayerLimit": false
+      'uuid':'${UUID}',
+      'name':'${USER}',
+      'level': 4,
+      'bypassPlayerLimit': false
     }
-  ]' > ops.json
+  ]" > ops.json
 fi
 
 
