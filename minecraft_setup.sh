@@ -31,7 +31,7 @@ Current Build: ${LATEST_BUILD}" >> log.txt
 echo -e "Download link: https://api.papermc.io/v2/projects/paper/versions/${VERSION}/builds/${LATEST_BUILD}/downloads/paper-${VERSION}-${LATEST_BUILD}.jar" >> log.txt
 
 
-curl -o paperclip.jar -X GET "https://api.papermc.io/v2/projects/paper/versions/${VERSION}/builds/${LATEST_BUILD}/downloads/paper-${VERSION}-${LATEST_BUILD}.jar" -H  "accept: application/java-archive" -JO
+curl -o minecraftServer.jar -X GET "https://api.papermc.io/v2/projects/paper/versions/${VERSION}/builds/${LATEST_BUILD}/downloads/paper-${VERSION}-${LATEST_BUILD}.jar" -H  "accept: application/java-archive" -JO
 #wget https://api.papermc.io/v2/projects/paper/versions/${VERSION}/builds/${LATEST_BUILD}/downloads/paper-${VERSION}-${LATEST_BUILD}.jar
 
 #get available memmory in kb
@@ -49,7 +49,7 @@ echo -e "
 cd ${DIR}
 while true
 do
-java -Xms${MIN_RAM}G -Xmx${MAX_RAM}G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paperclip.jar nogui
+java -Xms${MIN_RAM}G -Xmx${MAX_RAM}G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar minecraftServer.jar nogui
 echo 'restarting in 10'
 sleep 10
 done">>start.sh
@@ -63,7 +63,7 @@ echo "
 " >> log.txt
 
 #first launch will terminate as eula isnt set to true
-java -jar paperclip.jar
+java -jar minecraftServer.jar
 #/etc/syste
 
 if [ ! $USER = ""]; then
@@ -135,7 +135,6 @@ cat /etc/systemd/system/minecraft.service >> log.txt
 echo "
 
 " >> log.txt
-
 
 
 # commands to run in terminal 
